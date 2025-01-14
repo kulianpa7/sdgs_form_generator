@@ -1,0 +1,32 @@
+<div class="mb-3 child-container" data-type="multiple-selector">
+  <h1 for="text-title" class="text-center">複選框</h1>
+  <label class="form-label">複選框標題文字:<input type="text" class="form_label"></label>
+  <br>
+  <div class="button-container">
+    <button class="add_new_multiple_selector btn btn-primary">新增選項</button>
+  </div>
+  <div class="multipler">
+
+  </div>
+  <div class="check-form">
+  </div>
+</div>
+<script>
+  // 移除先前的事件綁定
+  $(".add_new_multiple_selector").off();
+
+  // 為新增按鈕綁定事件
+  $(".add_new_multiple_selector").on('click', function() {
+    $(this).parent().parent().find(".multipler").append(`
+          <div class="multiple_child">
+              <label for="close" class="close">X</label>
+              <input type="text" placeholder="輸入選項">
+          </div>
+      `);
+  });
+
+  // 為動態新增的 close 按鈕綁定點擊事件
+  $(document).on('click', '.multiple_child .close', function() {
+    $(this).closest('.multiple_child').remove();
+  });
+</script>

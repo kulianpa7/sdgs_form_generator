@@ -1,0 +1,33 @@
+<div class="mb-3 child-container" data-type="combo_selector">
+  <h1 for="text-title" class="text-center">下拉選單</h1>
+  <label for="combo-input" class="form-label">下拉選單標題:<input type="text" class="form_label"></label>
+  <br>
+  <div class="button-container">
+    <button class="add_new_combobox_selector btn btn-primary">新增選項</button>
+  </div>
+  <div class="comboboxer">
+
+  </div>
+  <select id="combo-input" class="form-select">
+    <option value="" disabled selected>請選擇</option>
+  </select>
+</div>
+<script>
+  // 移除先前的事件綁定
+  $(".add_new_combobox_selector").off();
+
+  // 為新增按鈕綁定事件
+  $(".add_new_combobox_selector").on('click', function() {
+    $(this).parent().parent().find(".comboboxer").append(`
+        <div class="combo_child">
+            <label for="close" class="close">X</label>
+            <input type="text" placeholder="輸入選項">
+        </div>
+    `);
+  });
+
+  // 為動態新增的 close 按鈕綁定點擊事件
+  $(document).on('click', '.combo_child .close', function() {
+    $(this).closest('.combo_child').remove();
+  });
+</script>

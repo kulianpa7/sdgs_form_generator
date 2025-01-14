@@ -10,7 +10,14 @@ body {
     border: rgba(0, 0, 0, 0.234) solid 5px;
 }
 .container{
+    user-select: none;
     max-width: 640px;
     background-color: #fff;
     padding-bottom: 50px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center; /* 水平置中 */
+    align-items: center;    /* 垂直置中 */
 }
