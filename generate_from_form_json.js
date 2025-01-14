@@ -5,7 +5,7 @@ const single_selector = (component, data,index) => {
     data.data.forEach(option => {
         $form.append(`
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="radio-options" value="${option}" id="${option}">
+                <input class="form-check-input" type="radio" name="radio-options" value="${option}" id="${option}_${index}">
                 <label class="form-check-label" for="${option}">${option}</label>
             </div>
         `);
@@ -20,7 +20,7 @@ const multiple_selector = (component, data,index) => {
     data.data.forEach(option => {
         $form.append(`
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="${option}" id="${option}">
+                <input class="form-check-input" type="checkbox" value="${option}" id="${option}_${index}">
                 <label class="form-check-label" for="${option}">${option}</label>
             </div>
         `);
@@ -32,7 +32,7 @@ const text_label = (component, data,index) => {
     const $component = $(component);
     $component.append(`
         <label for="string-input" class="form-label">${data.text_title}</label>
-        <input type="text" id="${data.data}" class="form-control" placeholder="${data.data}">
+        <input type="text" id="${data.data}_${index}" class="form-control" placeholder="${data.data}">
     `);
     $component.removeClass("ungenerate");
 };
