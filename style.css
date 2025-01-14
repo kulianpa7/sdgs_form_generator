@@ -1,0 +1,17 @@
+body {
+    background-color: #f0ebf8;
+    margin: 0;
+    height: 100%;
+}
+.child-container{
+    padding: 10px 5px 5px 5px;
+    background-color: rgb(255, 250, 236);
+    border-radius: 20px ;
+    border: rgba(0, 0, 0, 0.234) solid 5px;
+}
+.container{
+    min-width: 640px;
+    max-width: 640px;
+    background-color: #fff;
+    padding-bottom: 50px;
+}

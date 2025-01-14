@@ -7,11 +7,12 @@
   <title>Bootstrap & jQuery Form</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <div class="container mt-5">
-    <h1 class="mb-4">我是表單名稱</h1>
+  <div class="container">
+    <h1 class="mb-4 text-center">我是表單名稱</h1>
     <div id="form-container">
       <!-- Components will be loaded here dynamically -->
     </div>
@@ -39,17 +40,17 @@
           url_text: "點我連進去",
           url: "https://google.com/"
         }, {
-          "type": "date",
-          "text_title": "選擇日期",
-          "data": "date_field"
+          type: "date",
+          text_title: "選擇日期",
+          data: "date_field"
         }, {
-          "type": "textarea",
-          "text_title": "請輸入描述",
-          "data": "description"
+          type: "textarea",
+          text_title: "請輸入描述",
+          data: "description"
         }, {
-          "type": "time",
-          "text_title": "選擇時間",
-          "data": "time_field"
+          type: "time",
+          text_title: "選擇時間",
+          data: "time_field"
         }
 
       ];

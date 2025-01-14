@@ -34,7 +34,7 @@ const text_label = (component, data, index) => {
     $component.append(`
         <div class="mb-3">
             <label for="string-input" class="form-label">${data.text_title}</label>
-            <input type="text" id="${data.data}_${index}" class="form-control w-50" placeholder="${data.data}">
+            <input type="text" id="${data.data}_${index}" class="form-control" placeholder="${data.data}">
         </div>
     `);
     $component.removeClass("ungenerate");
