@@ -10,7 +10,6 @@ body {
     border: rgba(0, 0, 0, 0.234) solid 5px;
 }
 .container{
-    min-width: 640px;
     max-width: 640px;
     background-color: #fff;
     padding-bottom: 50px;
