@@ -61,6 +61,12 @@ const textarea = (component, data, index) => {
     $component.find("textarea").attr("id", `${data.data}_${index}`);
     $component.removeClass("ungenerate");
 };
+const timepicker = (component, data, index) => {
+    const $component = $(component);
+    $component.find(".form-label").text(data.text_title);
+    $component.find("input").attr("id", `${data.data}_${index}`);
+    $component.removeClass("ungenerate");
+};
 
 
 async function loadComponents(data, formContainer) {
@@ -87,7 +93,9 @@ async function loadComponents(data, formContainer) {
             case 'textarea':
                 url = 'component/textarea.html';
                 break;
-
+            case 'time':
+                url = 'component/time.html';
+                break;
             default:
                 console.error(`Unknown type: ${item.type}`);
                 continue; // 跳過未知類型
@@ -118,6 +126,9 @@ async function loadComponents(data, formContainer) {
                         break;
                     case 'textarea':
                         textarea($component, item, index);
+                        break;
+                    case 'time':
+                        timepicker($component, item, index);
                         break;
 
                 }
