@@ -45,3 +45,55 @@ const urlc = (component, data,index) => {
     `);
     $component.removeClass("ungenerate");
 };
+
+
+async function loadComponents(data,formContainer) {
+    for (let index = 0; index < data.length; index++) {
+        const item = data[index];
+        let url;
+
+        switch (item.type) {
+            case "string":
+                url = "component/text_label.html";
+                break;
+            case "multiple_selector":
+                url = "component/multiple-selector.html";
+                break;
+            case "single_selector":
+                url = "component/single-selector.html";
+                break;
+            case "url":
+                url = "component/url.html";
+                break;
+            default:
+                console.error(`Unknown type: ${item.type}`);
+                continue; // 跳過未知類型
+        }
+
+        if (url) {
+            try {
+                const component = await $.get(url); // 等待載入組件
+                const $component = $(component); // 將返回的 HTML 轉為 jQuery 對象
+                formContainer.append($component);
+
+                // 根據類型處理元件內容
+                switch (item.type) {
+                    case "string":
+                        text_label($component, item, index); // 傳遞 index
+                        break;
+                    case "multiple_selector":
+                        multiple_selector($component, item, index); // 傳遞 index
+                        break;
+                    case "single_selector":
+                        single_selector($component, item, index); // 傳遞 index
+                        break;
+                    case "url":
+                        urlc($component, item, index); // 傳遞 index
+                        break;
+                }
+            } catch (error) {
+                console.error(`Failed to load component from ${url}`, error);
+            }
+        }
+    }
+}

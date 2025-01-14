@@ -42,56 +42,7 @@
       ];
 
       const formContainer = $('#form-container');
-
-      // 處理每個項目
-      data.forEach((item,index) => {
-        let url;
-
-        switch (item.type) {
-          case "string":
-            url = "component/text_label.html";
-            break;
-          case "multiple_selector":
-            url = "component/multiple-selector.html";
-            break;
-          case "single_selector":
-            url = "component/single-selector.html";
-            break;
-          case "url":
-            url = "component/url.html";
-            break;
-          default:
-            console.error(`Unknown type: ${item.type}`);
-            return;
-        }
-
-        if (url) {
-          $.get(url)
-            .done((component) => {
-              const $component = $(component); // 將返回的 HTML 轉為 jQuery 對象
-              formContainer.append($component);
-
-              // 根據類型處理元件內容
-              switch (item.type) {
-                case "string":
-                  text_label($component, item,index);
-                  break;
-                case "multiple_selector":
-                  multiple_selector($component, item,index);
-                  break;
-                case "single_selector":
-                  single_selector($component, item,index);
-                  break;
-                case "url":
-                  urlc($component, item,index);
-                  break;
-              }
-            })
-            .fail(() => {
-              console.error(`Failed to load component from ${url}`);
-            });
-        }
-      });
+      loadComponents(data,formContainer); // 呼叫函數，確保順序執行
     });
   </script>
   <script src="generate_from_form_json.js"></script>
