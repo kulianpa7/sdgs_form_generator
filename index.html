@@ -20,8 +20,8 @@
     $(document).ready(function() {
       const data = [{
           type: "string",
-          text_title: "這是個網站",
-          data: "請輸入文字"
+          text_title: "輸入框標題:",
+          data: "請輸入標題文字"
         },
         {
           type: "multiple_selector",
@@ -35,14 +35,22 @@
         },
         {
           type: "url",
-          text_title: "這是個網址",
+          text_title: "這是個網址:",
           url_text: "點我連進去",
           url: "https://google.com/"
+        }, {
+          "type": "date",
+          "text_title": "選擇日期",
+          "data": "date_field"
+        }, {
+          "type": "textarea",
+          "text_title": "請輸入描述",
+          "data": "description"
         }
       ];
 
       const formContainer = $('#form-container');
-      loadComponents(data,formContainer); // 呼叫函數，確保順序執行
+      loadComponents(data, formContainer); // 呼叫函數，確保順序執行
     });
   </script>
   <script src="generate_from_form_json.js"></script>
