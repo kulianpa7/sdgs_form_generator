@@ -61,19 +61,19 @@ const urlc = (component, data, index) => {
 const dates = (component, data, index) => {
     const $component = $(component);
     $component.find(".form-label").text(data.text_title);
-    $component.find("input").attr("id", `${data.data}_${index}`);
+    $component.find("input").attr("id", `${index}`);
     $component.removeClass("ungenerate");
 };
 const textarea = (component, data, index) => {
     const $component = $(component);
     $component.find(".form-label").text(data.text_title);
-    $component.find("textarea").attr("id", `${data.data}_${index}`);
+    $component.find("textarea").attr("id", `${index}`);
     $component.removeClass("ungenerate");
 };
 const timepicker = (component, data, index) => {
     const $component = $(component);
     $component.find(".form-label").text(data.text_title);
-    $component.find("input").attr("id", `${data.data}_${index}`);
+    $component.find("input").attr("id", `${index}`);
     $component.removeClass("ungenerate");
 };
 const combo_selector = (component, data, index) => {
@@ -89,47 +89,23 @@ const combo_selector = (component, data, index) => {
     $component.removeClass("ungenerate"); // 移除初始化樣式
 };
 
-const data = [{
-    type: "string",
-    text_title: "輸入框標題:",
-    data: "請輸入標題文字"
-},
+const data =
 {
-    type: "multiple_selector",
-    text_title: "這是個多選的選項",
-    data: ["SD1", "SD2", "SD3", "sdgs"]
-},
-{
-    type: "single_selector",
-    text_title: "這是個單選的選項",
-    data: ["SD1", "SD2", "SD3"]
-},
-{
-    type: "url",
-    text_title: "這是個網址:",
-    url_text: "點我連進去",
-    url: "https://google.com/"
-}, {
-    type: "date",
-    text_title: "選擇日期",
-    data: "date_field"
-}, {
-    type: "textarea",
-    text_title: "請輸入描述",
-    data: "description"
-}, {
-    type: "time",
-    text_title: "選擇時間",
-    data: "time_field"
-}, {
-    type: "combo_selector",
-    text_title: "請選擇一個選項",
-    data: ["選項1", "選項2", "選項3"]
-}, {
-    type: "text",
-    text: "我是純文字"
-}
-];
+    "title": "我是網頁標題",
+    "form": [
+        {
+            "type": "string",
+            "text_title": "123",
+            "data": "123"
+        },
+        {
+            "type": "url",
+            "text_title": "123",
+            "url_text": "312",
+            "url": "https://google.com"
+        }
+    ]
+};
 
 (async function () {
     const componentsCache = {}; // 用於緩存已加載的組件
@@ -147,7 +123,7 @@ const data = [{
         combo_selector: "component/combo_selector.html",
         text: "component/text.html"
     };
-
+    $(".form_title").text(data.title);
     try {
         // 預先載入所有組件
         await Promise.all(
@@ -162,8 +138,8 @@ const data = [{
         );
 
         // 逐一處理數據並使用緩存的組件
-        for (let index = 0; index < data.length; index++) {
-            const item = data[index];
+        for (let index = 0; index < data.form.length; index++) {
+            const item = data.form[index];
             const component = componentsCache[item.type];
 
             if (!component) {

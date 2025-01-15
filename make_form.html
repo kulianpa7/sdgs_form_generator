@@ -11,9 +11,13 @@
 </head>
 
 <body>
+  <div class="button-container">
+    <button id="generate_from_form" class=" btn btn-primary w-25">轉換json</button>
+  </div>
+  
   <div class="container">
     <h1 class="text-center mb-4">
-        <input class="text-center" type="text" id="form_title">
+        <input class="text-center title_s" type="text" id="form_title">
     </h1>
     <div id="form-container" class="mb-4"></div>
 
@@ -26,7 +30,7 @@
             <option value="multiple_selector">複數選擇框</option>
             <option value="single_selector">單數選擇框</option>
             <option value="url">網址列</option>
-            <option value="dates">日期</option>
+            <option value="date">日期</option>
             <option value="textarea">文字輸入區域</option>
             <option value="time">時間框</option>
             <option value="combo_selector">下拉選單</option>
@@ -45,7 +49,7 @@
         multiple_selector: "make_component/multiple-selector.html",
         single_selector: "make_component/single-selector.html",
         url: "make_component/url.html",
-        dates: "make_component/dates.html",
+        date: "make_component/dates.html",
         textarea: "make_component/textarea.html",
         time: "make_component/time.html",
         combo_selector: "make_component/combo_selector.html",
@@ -68,9 +72,6 @@
       }
       $("#generate").on('click',function(){
         let value = $("#generate-combo-input").val();
-        console.log(value)
-        console.log(componentsCache)
-        console.log(componentsCache[value])
         if(componentsCache[value]){
             $("#form-container").append(componentsCache[value]);
         }else{
@@ -79,6 +80,7 @@
       })
     })();
   </script>
+  <script src="make_form.js"></script>
 </body>
 
 </html>
