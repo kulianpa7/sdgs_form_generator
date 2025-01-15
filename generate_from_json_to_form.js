@@ -1,5 +1,8 @@
 const single_selector = (component, data, index) => {
     const $component = $(component); // 確保只操作當前元件
+    $component.data("id", index);
+    // $component.attr("data-id", index);
+
     $component.find(".form-label").text(data.text_title);
     const $form = $component.find(".check-form").empty(); // 清空內容避免重複
     data.data.forEach(option => {
@@ -15,6 +18,9 @@ const single_selector = (component, data, index) => {
 };
 const multiple_selector = (component, data, index) => {
     const $component = $(component);
+    $component.data("id", index);
+    // $component.attr("data-id", index);
+
     $component.find(".form-label").text(data.text_title);
     const $form = $component.find(".check-form").empty();
     data.data.forEach(option => {
@@ -31,6 +37,9 @@ const multiple_selector = (component, data, index) => {
 
 const text_label = (component, data, index) => {
     const $component = $(component);
+    $component.data("id", index);
+    // $component.attr("data-id", index);
+
     $component.append(`
         <div class="mb-3">
             <label for="string-input" class="form-label">${data.text_title}</label>
@@ -42,6 +51,9 @@ const text_label = (component, data, index) => {
 
 const only_text = (component, data, index) => {
     const $component = $(component);
+    $component.data("id", index);
+    // $component.attr("data-id", index);
+
     $component.append(`
         <div class="mb-3">
             <label for="string-input" class="form-label">${data.text}</label>
@@ -51,6 +63,9 @@ const only_text = (component, data, index) => {
 };
 const urlc = (component, data, index) => {
     const $component = $(component);
+    $component.data("id", index);
+    // $component.attr("data-id", index);
+
     $component.append(`
         <label class="form-label">${data.text_title}</label>
         <a href="${data.url}" target="_blank" class="url">${data.url_text}</a>
@@ -60,49 +75,151 @@ const urlc = (component, data, index) => {
 
 const dates = (component, data, index) => {
     const $component = $(component);
+    $component.data("id", index);
+    // $component.attr("data-id", index);
+
     $component.find(".form-label").text(data.text_title);
     $component.find("input").attr("id", `${index}`);
     $component.removeClass("ungenerate");
 };
 const textarea = (component, data, index) => {
     const $component = $(component);
+    $component.data("id", index);
+    // $component.attr("data-id", index);
+
     $component.find(".form-label").text(data.text_title);
     $component.find("textarea").attr("id", `${index}`);
     $component.removeClass("ungenerate");
 };
 const timepicker = (component, data, index) => {
     const $component = $(component);
+    $component.data("id", index);
+    // $component.attr("data-id", index);
+
     $component.find(".form-label").text(data.text_title);
     $component.find("input").attr("id", `${index}`);
     $component.removeClass("ungenerate");
 };
 const combo_selector = (component, data, index) => {
     const $component = $(component);
-    $component.find(".form-label").text(data.text_title); // 動態設置標籤內容
-    const $select = $component.find("select").attr("id", `${data.data}_${index}`).empty(); // 清空並設置 ID
+    // 使用 .data() 存儲索引值
+    $component.data("id", index);
+    // 使用 .data() 儲存文字標題
+    $component.find(".form-label").text(data.text_title).data("text_title", data.text_title);
+    // 找到 select 元素並使用 .data() 儲存相關數據
+    const $select = $component.find("select").data("id", `${data.data}_${index}`).empty(); // 清空選項
 
-    // 動態生成選項
+    // 動態生成選項並使用 .data() 存儲選項值
     data.data.forEach(option => {
-        $select.append(`<option value="${option}">${option}</option>`);
+        const $option = $(`<option value="${option}">${option}</option>`).data("value", option);
+        $select.append($option);
     });
-
-    $component.removeClass("ungenerate"); // 移除初始化樣式
+    // 使用 .data() 儲存生成狀態
+    $component.data("generated", true);
+    // 移除初始化樣式
+    $component.removeClass("ungenerate");
 };
+
 
 const data =
 {
     "title": "我是網頁標題",
     "form": [
         {
+            "type": "text",
+            "text": "我是純文字"
+        },
+        {
             "type": "string",
-            "text_title": "123",
-            "data": "123"
+            "text_title": "姓名:",
+            "data": "請輸入姓名"
+        },
+        {
+            "type": "multiple_selector",
+            "text_title": "SDGS_多選",
+            "data": [
+                "SDGS1",
+                "SDGS2",
+                "SDGS3",
+                "SDGS4",
+                "SDGS5",
+                "SDGS6",
+                "SDGS7",
+                "SDGS8",
+                "SDGS9",
+                "SDGS10",
+                "SDGS11",
+                "SDGS12",
+                "SDGS13",
+                "SDGS14",
+                "SDGS15",
+                "SDGS16",
+                "SDGS17"
+            ]
+        },
+        {
+            "type": "single_selector",
+            "text_title": "SDGS_單選",
+            "data": [
+                "SDGS1",
+                "SDGS2",
+                "SDGS3",
+                "SDGS4",
+                "SDGS5",
+                "SDGS6",
+                "SDGS7",
+                "SDGS8",
+                "SDGS9",
+                "SDGS10",
+                "SDGS11",
+                "SDGS12",
+                "SDGS13",
+                "SDGS14",
+                "SDGS15",
+                "SDGS16",
+                "SDGS17"
+            ]
         },
         {
             "type": "url",
-            "text_title": "123",
-            "url_text": "312",
-            "url": "https://google.com"
+            "text_title": "點我連結到官網",
+            "url_text": "永續處官網",
+            "url": "https://ossr.nfu.edu.tw/index.php"
+        },
+        {
+            "type": "date",
+            "text_title": "日期起"
+        },
+        {
+            "type": "date",
+            "text_title": "日期迄"
+        },
+        {
+            "type": "textarea",
+            "text_title": "心得輸入(200字)"
+        },
+        {
+            "type": "time",
+            "text_title": "時間戳"
+        },
+        {
+            "type": "combo_selector",
+            "text_title": "學校選擇",
+            "data": [
+                "虎尾科技大學",
+                "高雄科技大學",
+                "台灣大學",
+                "中正大學"
+            ]
+        },
+        {
+            "type": "combo_selector",
+            "text_title": "地區選擇",
+            "data": [
+                "虎尾",
+                "苗相",
+                "偉屯"
+            ]
         }
     ]
 };
@@ -110,7 +227,7 @@ const data =
 (async function () {
     const componentsCache = {}; // 用於緩存已加載的組件
     const formContainer = $('#form-container'); // 表單容器
-
+    formContainer.data("id","ABC08751");
     // 預定義所有需要的組件路徑
     const componentUrls = {
         string: "component/text_label.html",
