@@ -1,4 +1,7 @@
 <div class="mb-3 child-container" data-type="single_selector">
+  <div class="d-flex">
+    <label for="close" class="close ms-auto">X</label>
+  </div>
   <h1 for="text-title" class="text-center">單選框</h1>
   <label class="form-label">單選框標題文字:<input type="text" class="form_label"></label>
   <br>
@@ -12,21 +15,21 @@
 </div>
 
 <script>
-    // 移除先前的事件綁定
-    $(".add_new_single_selector").off();
-  
-    // 為新增按鈕綁定事件
-    $(".add_new_single_selector").on('click', function() {
-      $(this).parent().parent().find(".singler").append(`
+  // 移除先前的事件綁定
+  $(".add_new_single_selector").off();
+
+  // 為新增按鈕綁定事件
+  $(".add_new_single_selector").on('click', function() {
+    $(this).parent().parent().find(".singler").append(`
             <div class="single_child">
                 <label for="close" class="close">X</label>
                 <input type="text" placeholder="輸入選項">
             </div>
         `);
-    });
-  
-    // 為動態新增的 close 按鈕綁定點擊事件
-    $(document).on('click', '.single_child .close', function() {
-      $(this).closest('.single_child').remove();
-    });
-  </script>
+  });
+
+  // 為動態新增的 close 按鈕綁定點擊事件
+  $(document).on('click', '.single_child .close', function() {
+    $(this).closest('.single_child').remove();
+  });
+</script>
