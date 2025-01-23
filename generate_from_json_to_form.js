@@ -120,185 +120,90 @@ const combo_selector = (component, data, index) => {
     $component.removeClass("ungenerate");
 };
 
+// let datas= "eyJ0aXRsZSI6IuaomemhjCIsImZvcm0iOlt7InR5cGUiOiJ0ZXh0IiwidGV4dCI6IuaIkeaYr+aWh+WtlyJ9LHsidHlwZSI6InN0cmluZyIsInRleHRfdGl0bGUiOiLmqJnpoYwiLCJkYXRhIjoidGV4dCJ9LHsidHlwZSI6Im11bHRpcGxlX3NlbGVjdG9yIiwidGV4dF90aXRsZSI6InRleHQiLCJkYXRhIjpbIkEiLCJCIiwiQyIsIkQiXX0seyJ0eXBlIjoic2luZ2xlX3NlbGVjdG9yIiwidGV4dF90aXRsZSI6IlRlc3QiLCJkYXRhIjpbIkMiLCJEIiwiVyIsIkEiXX0seyJ0eXBlIjoidXJsIiwidGV4dF90aXRsZSI6InVybF90aXRsZSIsInVybF90ZXh0IjoidXJsX3RleHQiLCJ1cmwiOiJodHRwczovL2dvb2dsZS5jb20ifSx7InR5cGUiOiJkYXRlIiwidGV4dF90aXRsZSI6IkRBVEUifSx7InR5cGUiOiJ0ZXh0YXJlYSIsInRleHRfdGl0bGUiOiJ0ZXh0YXJlYSJ9LHsidHlwZSI6InRpbWUiLCJ0ZXh0X3RpdGxlIjoidGltZSJ9LHsidHlwZSI6ImNvbWJvX3NlbGVjdG9yIiwidGV4dF90aXRsZSI6ImNvbWJvYm94c3NzcyIsImRhdGEiOlsiQSIsIkIiLCJDIiwiRCJdfV19";
+function base64ToUtf8(base64) {
+    return decodeURIComponent(atob(base64).split('').map(c =>
+        '%' + c.charCodeAt(0).toString(16).padStart(2, '0')
+    ).join(''));
+}
 
-const data =
-{
-    "title": "我是網頁標題",
-    "form": [
-        {
-            "type": "text",
-            "text": "我是純文字"
-        },
-        {
-            "type": "string",
-            "text_title": "姓名:",
-            "data": "請輸入姓名"
-        },
-        {
-            "type": "multiple_selector",
-            "text_title": "SDGS_多選",
-            "data": [
-                "SDGS1",
-                "SDGS2",
-                "SDGS3",
-                "SDGS4",
-                "SDGS5",
-                "SDGS6",
-                "SDGS7",
-                "SDGS8",
-                "SDGS9",
-                "SDGS10",
-                "SDGS11",
-                "SDGS12",
-                "SDGS13",
-                "SDGS14",
-                "SDGS15",
-                "SDGS16",
-                "SDGS17"
-            ]
-        },
-        {
-            "type": "single_selector",
-            "text_title": "SDGS_單選",
-            "data": [
-                "SDGS1",
-                "SDGS2",
-                "SDGS3",
-                "SDGS4",
-                "SDGS5",
-                "SDGS6",
-                "SDGS7",
-                "SDGS8",
-                "SDGS9",
-                "SDGS10",
-                "SDGS11",
-                "SDGS12",
-                "SDGS13",
-                "SDGS14",
-                "SDGS15",
-                "SDGS16",
-                "SDGS17"
-            ]
-        },
-        {
-            "type": "url",
-            "text_title": "點我連結到官網",
-            "url_text": "永續處官網",
-            "url": "https://ossr.nfu.edu.tw/index.php"
-        },
-        {
-            "type": "date",
-            "text_title": "日期起"
-        },
-        {
-            "type": "date",
-            "text_title": "日期迄"
-        },
-        {
-            "type": "textarea",
-            "text_title": "心得輸入(200字)"
-        },
-        {
-            "type": "time",
-            "text_title": "時間戳"
-        },
-        {
-            "type": "combo_selector",
-            "text_title": "學校選擇",
-            "data": [
-                "虎尾科技大學",
-                "高雄科技大學",
-                "台灣大學",
-                "中正大學"
-            ]
-        },
-        {
-            "type": "combo_selector",
-            "text_title": "地區選擇",
-            "data": [
-                "虎尾",
-                "苗相",
-                "偉屯"
-            ]
-        }
-    ]
-};
+// const data = JSON.parse(base64ToUtf8(datas));
 
-(async function () {
-    const componentsCache = {}; // 用於緩存已加載的組件
-    const formContainer = $('#form-container'); // 表單容器
-    formContainer.data("id","ABC08751");
-    // 預定義所有需要的組件路徑
-    const componentUrls = {
-        string: "component/text_label.html",
-        multiple_selector: "component/multiple-selector.html",
-        single_selector: "component/single-selector.html",
-        url: "component/url.html",
-        date: "component/dates.html",
-        textarea: "component/textarea.html",
-        time: "component/time.html",
-        combo_selector: "component/combo_selector.html",
-        text: "component/text.html"
-    };
-    $(".form_title").text(data.title);
-    try {
-        // 預先載入所有組件
-        await Promise.all(
-            Object.entries(componentUrls).map(async ([type, url]) => {
-                try {
-                    const component = await $.get(url);
-                    componentsCache[type] = component; // 緩存組件
-                } catch (error) {
-                    console.error(`Failed to load component from ${url}`, error);
-                }
-            })
-        );
+// (async function () {
+//     const componentsCache = {}; // 用於緩存已加載的組件
+//     const formContainer = $('#form-container'); // 表單容器
+//     formContainer.data("id","ABC08751");
+//     // 預定義所有需要的組件路徑
+//     const componentUrls = {
+//         string: "component/text_label.html",
+//         multiple_selector: "component/multiple-selector.html",
+//         single_selector: "component/single-selector.html",
+//         url: "component/url.html",
+//         date: "component/dates.html",
+//         textarea: "component/textarea.html",
+//         time: "component/time.html",
+//         combo_selector: "component/combo_selector.html",
+//         text: "component/text.html"
+//     };
+//     $(".form_title").text(data.title);
+//     try {
+//         // 預先載入所有組件
+//         await Promise.all(
+//             Object.entries(componentUrls).map(async ([type, url]) => {
+//                 try {
+//                     const component = await $.get(url);
+//                     componentsCache[type] = component; // 緩存組件
+//                 } catch (error) {
+//                     console.error(`Failed to load component from ${url}`, error);
+//                 }
+//             })
+//         );
 
-        // 逐一處理數據並使用緩存的組件
-        for (let index = 0; index < data.form.length; index++) {
-            const item = data.form[index];
-            const component = componentsCache[item.type];
+//         // 逐一處理數據並使用緩存的組件
+//         for (let index = 0; index < data.form.length; index++) {
+//             const item = data.form[index];
+//             const component = componentsCache[item.type];
 
-            if (!component) {
-                console.error(`Unknown type or failed to preload: ${item.type}`);
-                continue; // 跳過未知類型或未加載的組件
-            }
+//             if (!component) {
+//                 console.error(`Unknown type or failed to preload: ${item.type}`);
+//                 continue; // 跳過未知類型或未加載的組件
+//             }
 
-            const $component = $(component).clone(); // 克隆以避免修改原始緩存
-            formContainer.append($component);
+//             const $component = $(component).clone(); // 克隆以避免修改原始緩存
+//             formContainer.append($component);
 
-            // 根據類型處理元件內容
-            switch (item.type) {
-                case "string":
-                    text_label($component, item, index);
-                    break;
-                case "multiple_selector":
-                    multiple_selector($component, item, index);
-                    break;
-                case "single_selector":
-                    single_selector($component, item, index);
-                    break;
-                case "url":
-                    urlc($component, item, index);
-                    break;
-                case "date":
-                    dates($component, item, index);
-                    break;
-                case "textarea":
-                    textarea($component, item, index);
-                    break;
-                case "time":
-                    timepicker($component, item, index);
-                    break;
-                case "combo_selector":
-                    combo_selector($component, item, index);
-                    break;
-                case "text":
-                    only_text($component, item, index);
-                    break;
-            }
-        }
-    } catch (error) {
-        console.error("Error in preloading components or rendering form:", error);
-    }
-})();
+//             // 根據類型處理元件內容
+//             switch (item.type) {
+//                 case "string":
+//                     text_label($component, item, index);
+//                     break;
+//                 case "multiple_selector":
+//                     multiple_selector($component, item, index);
+//                     break;
+//                 case "single_selector":
+//                     single_selector($component, item, index);
+//                     break;
+//                 case "url":
+//                     urlc($component, item, index);
+//                     break;
+//                 case "date":
+//                     dates($component, item, index);
+//                     break;
+//                 case "textarea":
+//                     textarea($component, item, index);
+//                     break;
+//                 case "time":
+//                     timepicker($component, item, index);
+//                     break;
+//                 case "combo_selector":
+//                     combo_selector($component, item, index);
+//                     break;
+//                 case "text":
+//                     only_text($component, item, index);
+//                     break;
+//             }
+//         }
+//     } catch (error) {
+//         console.error("Error in preloading components or rendering form:", error);
+//     }
+// })();

@@ -7,22 +7,137 @@
   <title>Bootstrap & jQuery Form</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <div class="container">
-    <h1 class="mb-4 text-center form_title">我是表單名稱</h1>
+  <div class="row d-flex flex-column justify-content-center align-items-center form_inputs" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+    <div class="col-12 mb-3">
+      <input id="form_code" type="text" class="form-control" placeholder="請輸入表單代碼" style="width: 300px;">
+    </div>
+    <div class="col-12 mb-3">
+      <button id="submit" class="btn btn-primary" style="width: 300px;">送出</button>
+    </div>
+  </div>
+
+
+
+
+
+  <div class="container no-display">
+    <h1 class="mb-4 text-center form_title"></h1>
     <div id="form-container">
       <!-- Components will be loaded here dynamically -->
     </div>
     <div class="button-container">
-      <button id="submit_data" class=" btn btn-primary w-25">提交檔案</button>
+      <button id="submit_data" class=" btn btn-primary w-25">提交回復</button>
     </div>
   </div>
   <script src="generate_from_json_to_form.js"></script>
   <script src="submit_from_form_to_json.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    $("#submit").on('click', async function() {
+      const componentsCache = {}; // 用於緩存已加載的組件
+      let inputs = $("#form_code").val();
+      let datacstd = await $.ajax({
+        type: "get",
+        url: `https://dingdingstudio.serveminecraft.net/publics/get_form_json?password=${inputs}`
+      })
+      if (!datacstd.error) {
+        $(".form_inputs").remove();
+        datacstd = datacstd.base64;
+        datacstd = JSON.parse(base64ToUtf8(datacstd));
+        const formContainer = $('#form-container'); // 表單容器
+        formContainer.data("id", inputs);
+        // 預定義所有需要的組件路徑
+        const componentUrls = {
+          string: "component/text_label.html",
+          multiple_selector: "component/multiple-selector.html",
+          single_selector: "component/single-selector.html",
+          url: "component/url.html",
+          date: "component/dates.html",
+          textarea: "component/textarea.html",
+          time: "component/time.html",
+          combo_selector: "component/combo_selector.html",
+          text: "component/text.html"
+        };
+        $(".form_title").text(datacstd.title);
+        try {
+          // 預先載入所有組件
+          await Promise.all(
+            Object.entries(componentUrls).map(async ([type, url]) => {
+              try {
+                const component = await $.get(url);
+                componentsCache[type] = component; // 緩存組件
+              } catch (error) {
+                console.error(`Failed to load component from ${url}`, error);
+              }
+            })
+          );
+
+          // 逐一處理數據並使用緩存的組件
+          for (let index = 0; index < datacstd.form.length; index++) {
+            const item = datacstd.form[index];
+            const component = componentsCache[item.type];
+
+            if (!component) {
+              console.error(`Unknown type or failed to preload: ${item.type}`);
+              continue; // 跳過未知類型或未加載的組件
+            }
+
+            const $component = $(component).clone(); // 克隆以避免修改原始緩存
+            formContainer.append($component);
+
+            // 根據類型處理元件內容
+            switch (item.type) {
+              case "string":
+                text_label($component, item, index);
+                break;
+              case "multiple_selector":
+                multiple_selector($component, item, index);
+                break;
+              case "single_selector":
+                single_selector($component, item, index);
+                break;
+              case "url":
+                urlc($component, item, index);
+                break;
+              case "date":
+                dates($component, item, index);
+                break;
+              case "textarea":
+                textarea($component, item, index);
+                break;
+              case "time":
+                timepicker($component, item, index);
+                break;
+              case "combo_selector":
+                combo_selector($component, item, index);
+                break;
+              case "text":
+                only_text($component, item, index);
+                break;
+            }
+          }
+        } catch (error) {
+          console.error("Error in preloading components or rendering form:", error);
+        }
+        $(".container").removeClass("no-display")
+      } else {
+        // 使用 SweetAlert2 顯示錯誤訊息
+        console.log(datacstd);
+        Swal.fire({
+          icon: 'error',
+          title: '發生錯誤',
+          text: datacstd.base64
+        });
+      }
+
+    })
+  </script>
 </body>
 
 </html>
