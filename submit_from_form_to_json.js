@@ -67,6 +67,20 @@ $("#submit_data").on('click',async function () {
         url:"https://dingdingstudio.serveminecraft.net/publics/post_data",
         data:{base64:base64String}
     })
+    if(!result.error){
+        $("#form-container").empty();
+        $("body").append(valsc);
+        $("#contin").addClass('no-display');
+        Swal.fire({
+          icon: 'success',
+          title: '成功',
+        });
+    }else{
+        Swal.fire({
+          icon: 'error',
+          title: '發生錯誤',
+        });
+    }
     console.log(result);
     // 將 Base64 解碼回原始資料
     let decodedData = JSON.parse(base64ToUtf8(base64String));
