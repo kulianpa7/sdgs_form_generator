@@ -5,10 +5,10 @@ body {
 }
 .child-container{
     padding: 10px 5px 5px 5px;
-    background-color: #53b0ae;
+    background-color: #ffffff;
     border-radius: 20px ;
     border: #53b0ae52 solid 5px;
-    color:#fff
+    color:#000000
 }
 .container{
     user-select: none;
