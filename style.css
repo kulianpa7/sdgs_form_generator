@@ -18,10 +18,12 @@ body {
 }
 .btn{
     background-color: #39b8bd;
+    border:1px #39b8bd solid;
 }
 .btn:hover{
     background-color: #1bf0f7;
     color:black;
+    border:1px #1bf0f7 solid;
 }
 .button-container {
     display: flex;
@@ -30,4 +32,39 @@ body {
 }
 .no-display{
     display: none;
+}
+
+/* 深色模式 */
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #808e94;
+    }
+    h1{
+        color:white;
+    }
+    .container{
+        user-select: none;
+        max-width: 640px;
+        background-color: #808e94;
+        padding-bottom: 50px;
+    }
+    .child-container{
+        padding: 10px 5px 5px 5px;
+        background-color: #808e94;
+        border-radius: 10px ;
+        border: #31445352 solid 3px;
+        color:#ffffff
+    }
+    .btn{
+        background-color: #8cb8ba;
+        border:3px #8fb9bd solid;
+    }
+    .btn:hover{
+        background-color: #cdeff1;
+        color:black;
+        border:1px #cdeff1 solid;
+    }
+    a{
+        color:#1bf0f7;
+    }
 }
