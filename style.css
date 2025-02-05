@@ -1,13 +1,14 @@
 body {
-    background-color: #f0ebf8;
+    background-color: #ffffff;
     margin: 0;
     height: 100%;
 }
 .child-container{
     padding: 10px 5px 5px 5px;
-    background-color: rgb(255, 250, 236);
+    background-color: #53b0ae;
     border-radius: 20px ;
-    border: rgba(0, 0, 0, 0.234) solid 5px;
+    border: #53b0ae52 solid 5px;
+    color:#fff
 }
 .container{
     user-select: none;
@@ -15,7 +16,9 @@ body {
     background-color: #fff;
     padding-bottom: 50px;
 }
-
+.btn{
+    background-color: #39b8bd;
+}
 .button-container {
     display: flex;
     justify-content: center; /* 水平置中 */
