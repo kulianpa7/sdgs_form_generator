@@ -35,7 +35,7 @@ body {
 }
 
 /* 深色模式 */
-/* @media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: dark) {
     body {
         background-color: #808e94;
     }
@@ -67,4 +67,4 @@ body {
     a{
         color:#1bf0f7;
     }
-} */
+}
