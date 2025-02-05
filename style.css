@@ -19,6 +19,10 @@ body {
 .btn{
     background-color: #39b8bd;
 }
+.btn:hover{
+    background-color: #1bf0f7;
+    color:black;
+}
 .button-container {
     display: flex;
     justify-content: center; /* 水平置中 */
