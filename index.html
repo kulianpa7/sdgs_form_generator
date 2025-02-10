@@ -45,7 +45,7 @@
       let inputs = $("#form_code").val();
       let datacstd = await $.ajax({
         type: "get",
-        url: `https://manage.asscheck.monster/publics/get_form_json?password=${inputs}`
+        url: `https://manage2.asscheck.monster/publics/get_form_json?password=${inputs}`
       })
       if (!datacstd.error) {
         $(".form_inputs").remove();
