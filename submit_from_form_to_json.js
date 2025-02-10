@@ -64,7 +64,7 @@ $("#submit_data").on('click',async function () {
     console.log("Base64 編碼：", base64String);
     let result = await $.ajax({
         type:"POST",
-        url:"https://manage.asscheck.monster/publics/post_data",
+        url:"https://manage2.asscheck.monster/publics/post_data",
         data:{base64:base64String}
     })
     if(!result.error){
